@@ -44,6 +44,7 @@ You should only output valid code in the language ]=] .. vim.o.filetype .. [=[
 with tags.
 Make sure to respect the white space and indentation rules of the language.
 Do not output anything in plain language, make sure you only use the relevant programming language verbatim.
+Do not print ``` or the language, just give the code after it.
 For example, consider the following request:
 <begin_code_prefix>def print_hello():<end_code_prefix><begin_code_suffix>\n    return<end_code_suffix><begin_code_middle>
 Your answer should be:
