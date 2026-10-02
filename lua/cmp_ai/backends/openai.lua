@@ -61,7 +61,7 @@ Your answer should be:
 
   local api_params = {}
   for k, v in pairs(self.params) do
-    if k ~= 'url' and k ~= 'api_key' then
+    if k ~= 'url' and k ~= 'api_key' and type(v) ~= 'function' then
       api_params[k] = v
     end
   end
@@ -69,6 +69,10 @@ Your answer should be:
   data = vim.tbl_deep_extend('keep', data, api_params)
   self:Get(self.params.url, self.headers, data, function(answer)
     local new_data = {}
+    if answer.error then
+      local message = type(answer.error) == 'table' and answer.error.message or answer.error
+      vim.notify('cmp-ai: ' .. tostring(message):sub(1, 300), vim.log.levels.ERROR)
+    end
     if answer.choices then
       for _, response in ipairs(answer.choices) do
         local entry = response.message.content:gsub('<end_code_middle>', '')
